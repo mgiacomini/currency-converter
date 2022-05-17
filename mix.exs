@@ -45,6 +45,7 @@ defmodule CurrencyConversor.MixProject do
       {:plug_cowboy, "~> 2.5"},
       {:decimal, "~> 2.0"},
       {:tesla, "~> 1.4"},
+      {:mox, "~> 1.0", only: :test},
       {:excoveralls, "~> 0.14", only: :test},
       {:credo, "~> 1.5", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0", only: [:dev, :test], runtime: false}
