@@ -1,6 +1,12 @@
 defmodule CurrencyConversor do
   @moduledoc """
-  This module defines an adapter interface and exposes a public API to convert amounts of money into another currencies.
+  This module defines behaviour and exposes a public API to convert amounts of money into another currencies.
+  The behaviour was defined to allow us to change our implementation without change our clients (ex: Phoenix Controllers).
+
+  If you want to change the default implementation, just replace the following config with the new one:
+
+    config :currency_conversor, :adapter, CurrencyConversor.FixerConversor
+
   """
 
   @typedoc "Currency type using international notation. Ex: `BRL` for Brazilian Real"

@@ -22,7 +22,6 @@ defmodule CurrencyConversorWeb do
       use Phoenix.Controller, namespace: CurrencyConversorWeb
 
       import Plug.Conn
-      import CurrencyConversorWeb.Gettext
       alias CurrencyConversorWeb.Router.Helpers, as: Routes
     end
   end
@@ -51,20 +50,12 @@ defmodule CurrencyConversorWeb do
     end
   end
 
-  def channel do
-    quote do
-      use Phoenix.Channel
-      import CurrencyConversorWeb.Gettext
-    end
-  end
-
   defp view_helpers do
     quote do
       # Import basic rendering functionality (render, render_layout, etc)
       import Phoenix.View
 
       import CurrencyConversorWeb.ErrorHelpers
-      import CurrencyConversorWeb.Gettext
       alias CurrencyConversorWeb.Router.Helpers, as: Routes
     end
   end
