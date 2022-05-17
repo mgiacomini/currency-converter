@@ -4,6 +4,10 @@ defmodule CurrencyConversor.FixerConversorTest do
 
   alias CurrencyConversor.FixerConversor
 
+  @amount Decimal.from_float(100.0)
+  @from "BRL"
+  @to "USD"
+
   describe "convert/3" do
     setup context do
       if context[:without_api_key] do
@@ -18,7 +22,7 @@ defmodule CurrencyConversor.FixerConversorTest do
     @tag :without_api_key
     test "raises an error when api key isn't configured" do
       assert_raise RuntimeError, "Fixer API KEY isn't configured.", fn ->
-        FixerConversor.convert("BRL", "USD", 100)
+        FixerConversor.convert(@from, @to, @amount)
       end
     end
 
@@ -28,7 +32,7 @@ defmodule CurrencyConversor.FixerConversorTest do
       end)
 
       assert {:error, "Invalid authentication credentials"} ==
-               FixerConversor.convert("BRL", "USD", 100)
+               FixerConversor.convert(@from, @to, @amount)
     end
 
     test "returns error when *from* currency is invalid" do
@@ -42,7 +46,7 @@ defmodule CurrencyConversor.FixerConversorTest do
         json(%{"error" => expected_error}, status: 200)
       end)
 
-      assert {:error, expected_error} == FixerConversor.convert("xxx", "USD", 100)
+      assert {:error, expected_error} == FixerConversor.convert("xxx", @to, @amount)
     end
 
     test "returns error when *to* currency is invalid" do
@@ -56,35 +60,17 @@ defmodule CurrencyConversor.FixerConversorTest do
         json(%{"error" => expected_error}, status: 200)
       end)
 
-      assert {:error, expected_error} == FixerConversor.convert("BRL", "xxx", 100)
-    end
-
-    test "returns error when amount isn't a number" do
-      expected_error = %{
-        "code" => 403,
-        "info" => "You have not specified an amount to be converted. [Example: amount=5]",
-        "type" => "invalid_conversion_amount"
-      }
-
-      mock(fn %{method: :get} ->
-        json(%{"error" => expected_error}, status: 200)
-      end)
-
-      assert {:error, expected_error} == FixerConversor.convert("BRL", "USD", "xxx")
+      assert {:error, expected_error} == FixerConversor.convert(@from, "xxx", @amount)
     end
 
     test "returns the converted amount" do
-      from = "BRL"
-      to = "USD"
-      amount = 100
-
       mock(fn %{method: :get, url: url, headers: headers} ->
-        assert expected_url(from, to, amount) == url
+        assert expected_url(@from, @to, @amount) == url
         assert expected_headers() == headers
         json(%{"success" => true, "result" => 20.0952}, status: 200)
       end)
 
-      assert {:ok, 20.0952} == FixerConversor.convert(from, to, amount)
+      assert {:ok, Decimal.from_float(20.0952)} == FixerConversor.convert(@from, @to, @amount)
     end
 
     defp expected_url(from, to, amount) do
