@@ -5,8 +5,6 @@ defmodule CurrencyConverter.Application do
 
   @impl true
   def start(_type, _args) do
-    IO.puts(System.get_env("FIXER_API_KEY"))
-
     children = [
       CurrencyConverterWeb.Telemetry,
       CurrencyConverterWeb.Endpoint
