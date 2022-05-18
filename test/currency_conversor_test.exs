@@ -1,4 +1,4 @@
-defmodule CurrencyConversorTest do
+defmodule CurrencyConverterTest do
   use ExUnit.Case
   import Mox
 
@@ -10,17 +10,17 @@ defmodule CurrencyConversorTest do
 
   describe "convert/3" do
     test "raises an error if no implementation was configured" do
-      Application.put_env(:currency_conversor, :adapter, nil)
+      Application.put_env(:currency_converter, :adapter, nil)
 
       assert_raise RuntimeError, "No adapter was configured.", fn ->
-        CurrencyConversor.convert("", "", %Decimal{})
+        CurrencyConverter.convert("", "", %Decimal{})
       end
     end
 
     test "returns the adapter response" do
-      Application.put_env(:currency_conversor, :adapter, CurrencyConversorMock)
-      expect(CurrencyConversorMock, :convert, fn @from, @to, @amount -> {:ok, %Decimal{}} end)
-      assert {:ok, %Decimal{}} == CurrencyConversor.convert(@from, @to, @amount)
+      Application.put_env(:currency_converter, :adapter, CurrencyConverterMock)
+      expect(CurrencyConverterMock, :convert, fn @from, @to, @amount -> {:ok, %Decimal{}} end)
+      assert {:ok, %Decimal{}} == CurrencyConverter.convert(@from, @to, @amount)
     end
   end
 end

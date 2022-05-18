@@ -1,11 +1,11 @@
-defmodule CurrencyConversor do
+defmodule CurrencyConverter do
   @moduledoc """
   This module defines behaviour and exposes a public API to convert amounts of money into another currencies.
   The behaviour was defined to allow us to change our implementation without change our clients (ex: Phoenix Controllers).
 
   If you want to change the default implementation, just replace the following config with the new one:
 
-    config :currency_conversor, :adapter, CurrencyConversor.FixerConversor
+    config :currency_converter, :adapter, CurrencyConverter.FixerConversor
 
   """
 
@@ -32,6 +32,6 @@ defmodule CurrencyConversor do
   end
 
   defp impl! do
-    Application.get_env(:currency_conversor, :adapter) || raise "No adapter was configured."
+    Application.get_env(:currency_converter, :adapter) || raise "No adapter was configured."
   end
 end

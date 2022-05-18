@@ -1,20 +1,21 @@
-defmodule CurrencyConversor.FixerConversor do
+defmodule CurrencyConverter.FixerConverter do
   @moduledoc """
-  An implementation of CurrencyConversor using Fixer.io
+  An implementation of CurrencyConverter using Fixer.io
 
   Please add the following code in your config file to set the api key:
 
-    config :currency_conversor, CurrencyConversor.FixerConversor, 
+    config :currency_converter, CurrencyConverter.FixerConversor,
       api_key: "some-key"
 
   """
-  @behaviour CurrencyConversor
+  @behaviour CurrencyConverter
 
   use Tesla, only: [:get], docs: false
 
   plug Tesla.Middleware.BaseUrl, "https://api.apilayer.com/fixer"
   plug Tesla.Middleware.JSON
 
+  @impl true
   def convert(from, to, %Decimal{} = amount) do
     url = "/convert?from=#{from}&to=#{to}&amount=#{Decimal.to_float(amount)}"
     opts = [headers: [{"apikey", api_key!()}]]
@@ -32,7 +33,7 @@ defmodule CurrencyConversor.FixerConversor do
   end
 
   defp api_key! do
-    Application.get_env(:currency_conversor, __MODULE__)[:api_key] ||
+    Application.get_env(:currency_converter, __MODULE__)[:api_key] ||
       raise("Fixer API KEY isn't configured.")
   end
 end

@@ -1,5 +1,5 @@
-defmodule CurrencyConversorWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :currency_conversor
+defmodule CurrencyConverterWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :currency_converter
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
@@ -17,5 +17,5 @@ defmodule CurrencyConversorWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug CurrencyConversorWeb.Router
+  plug CurrencyConverterWeb.Router
 end

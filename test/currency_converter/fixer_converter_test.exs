@@ -1,8 +1,8 @@
-defmodule CurrencyConversor.FixerConversorTest do
+defmodule CurrencyConverter.FixerConverterTest do
   use ExUnit.Case
   import Tesla.Mock
 
-  alias CurrencyConversor.FixerConversor
+  alias CurrencyConverter.FixerConverter
 
   @amount Decimal.from_float(100.0)
   @from "BRL"
@@ -11,9 +11,9 @@ defmodule CurrencyConversor.FixerConversorTest do
   describe "convert/3" do
     setup context do
       if context[:without_api_key] do
-        Application.put_env(:currency_conversor, FixerConversor, api_key: nil)
+        Application.put_env(:currency_converter, FixerConverter, api_key: nil)
       else
-        Application.put_env(:currency_conversor, FixerConversor, api_key: "some-key")
+        Application.put_env(:currency_converter, FixerConverter, api_key: "some-key")
       end
 
       :ok
@@ -22,7 +22,7 @@ defmodule CurrencyConversor.FixerConversorTest do
     @tag :without_api_key
     test "raises an error when api key isn't configured" do
       assert_raise RuntimeError, "Fixer API KEY isn't configured.", fn ->
-        FixerConversor.convert(@from, @to, @amount)
+        FixerConverter.convert(@from, @to, @amount)
       end
     end
 
@@ -32,7 +32,7 @@ defmodule CurrencyConversor.FixerConversorTest do
       end)
 
       assert {:error, "Invalid authentication credentials"} ==
-               FixerConversor.convert(@from, @to, @amount)
+               FixerConverter.convert(@from, @to, @amount)
     end
 
     test "returns error when *from* currency is invalid" do
@@ -46,7 +46,7 @@ defmodule CurrencyConversor.FixerConversorTest do
         json(%{"error" => expected_error}, status: 200)
       end)
 
-      assert {:error, expected_error} == FixerConversor.convert("xxx", @to, @amount)
+      assert {:error, expected_error} == FixerConverter.convert("xxx", @to, @amount)
     end
 
     test "returns error when *to* currency is invalid" do
@@ -60,7 +60,7 @@ defmodule CurrencyConversor.FixerConversorTest do
         json(%{"error" => expected_error}, status: 200)
       end)
 
-      assert {:error, expected_error} == FixerConversor.convert(@from, "xxx", @amount)
+      assert {:error, expected_error} == FixerConverter.convert(@from, "xxx", @amount)
     end
 
     test "returns the converted amount" do
@@ -70,7 +70,7 @@ defmodule CurrencyConversor.FixerConversorTest do
         json(%{"success" => true, "result" => 20.0952}, status: 200)
       end)
 
-      assert {:ok, Decimal.from_float(20.0952)} == FixerConversor.convert(@from, @to, @amount)
+      assert {:ok, Decimal.from_float(20.0952)} == FixerConverter.convert(@from, @to, @amount)
     end
 
     defp expected_url(from, to, amount) do
@@ -78,7 +78,7 @@ defmodule CurrencyConversor.FixerConversorTest do
     end
 
     defp expected_headers do
-      api_key = Application.get_env(:currency_conversor, FixerConversor)[:api_key]
+      api_key = Application.get_env(:currency_converter, FixerConverter)[:api_key]
       [{"apikey", api_key}]
     end
   end

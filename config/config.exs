@@ -8,10 +8,10 @@
 import Config
 
 # Configures the endpoint
-config :currency_conversor, CurrencyConversorWeb.Endpoint,
+config :currency_converter, CurrencyConverterWeb.Endpoint,
   url: [host: "localhost"],
-  render_errors: [view: CurrencyConversorWeb.ErrorView, accepts: ~w(json), layout: false],
-  pubsub_server: CurrencyConversor.PubSub,
+  render_errors: [view: CurrencyConverterWeb.ErrorView, accepts: ~w(json), layout: false],
+  pubsub_server: CurrencyConverter.PubSub,
   live_view: [signing_salt: "Us+ICJby"]
 
 # Configures Elixir's Logger

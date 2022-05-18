@@ -1,9 +1,9 @@
-defmodule CurrencyConversor.MixProject do
+defmodule CurrencyConverter.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :currency_conversor,
+      app: :currency_converter,
       version: "0.1.0",
       elixir: "~> 1.12",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -23,7 +23,7 @@ defmodule CurrencyConversor.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {CurrencyConversor.Application, []},
+      mod: {CurrencyConverter.Application, []},
       extra_applications: [:logger, :runtime_tools]
     ]
   end

@@ -1,5 +1,5 @@
-defmodule CurrencyConversorWeb.ErrorView do
-  use CurrencyConversorWeb, :view
+defmodule CurrencyConverterWeb.ErrorView do
+  use CurrencyConverterWeb, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.
