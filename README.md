@@ -1,18 +1,22 @@
-# CurrencyConverter
+# Getting started
 
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+  * Start Phoenix endpoint with `FIXER_API_KEY=your-api-key mix phx.server` or inside IEx with `FIXER_API_KEY=your-api-key iex -S mix phx.server`
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Now you can convert amounts of money making POST requests to the API:
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+```sh
+curl --request POST \
+  --url http://localhost:4000/convert \
+  --header 'Content-Type: application/json' \
+  --data '{"amount": 1.0, "from": "USD", "to": "BRL"}'
+```
 
-## Learn more
+The API will respond with status 200 when everything works and with 422 when any attribute is invalid.
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+## Testing
+
+  * Run the test suite with `mix test`
+  * Run credo with `mix credo --strict`
