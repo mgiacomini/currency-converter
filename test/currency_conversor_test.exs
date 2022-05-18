@@ -18,8 +18,12 @@ defmodule CurrencyConverterTest do
     end
 
     test "returns the adapter response" do
-      Application.put_env(:currency_converter, :adapter, CurrencyConverterMock)
-      expect(CurrencyConverterMock, :convert, fn @from, @to, @amount -> {:ok, %Decimal{}} end)
+      Application.put_env(:currency_converter, :adapter, CurrencyConverter.MockConverter)
+
+      expect(CurrencyConverter.MockConverter, :convert, fn @from, @to, @amount ->
+        {:ok, %Decimal{}}
+      end)
+
       assert {:ok, %Decimal{}} == CurrencyConverter.convert(@from, @to, @amount)
     end
   end

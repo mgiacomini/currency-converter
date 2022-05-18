@@ -2,4 +2,4 @@ ExUnit.start()
 
 ## Mocks
 
-Mox.defmock(CurrencyConverterMock, for: CurrencyConverter)
+Mox.defmock(CurrencyConverter.MockConverter, for: CurrencyConverter)

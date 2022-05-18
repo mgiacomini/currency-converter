@@ -21,11 +21,11 @@ defmodule CurrencyConverter.FixerConverter do
     opts = [headers: [{"apikey", api_key!()}]]
 
     case get(url, opts) do
-      {:ok, %Tesla.Env{status: 401, body: body}} ->
-        {:error, body["message"]}
-
       {:ok, %Tesla.Env{status: 200, body: %{"success" => true, "result" => amount}}} ->
         {:ok, Decimal.from_float(amount)}
+
+      {:ok, %Tesla.Env{status: 401, body: body}} ->
+        {:error, body["message"]}
 
       {:ok, %Tesla.Env{status: 200, body: %{"error" => error}}} ->
         {:error, error}

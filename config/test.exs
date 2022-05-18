@@ -15,4 +15,6 @@ config :phoenix, :plug_init_mode, :runtime
 
 config :tesla, adapter: Tesla.Mock
 
-config :currency_converter, CurrencyConverter.FixerConversor, api_key: "some-key"
+config :currency_converter, CurrencyConverter.FixerConverter, api_key: "some-key"
+
+config :currency_converter, :adapter, CurrencyConverter.MockConverter
