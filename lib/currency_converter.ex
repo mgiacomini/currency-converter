@@ -29,7 +29,7 @@ defmodule CurrencyConverter do
               {:ok, Decimal.t()} | {:error, error_message()} | no_return()
 
   @doc "Calls an external service to get a real-time currency conversion"
-  @spec convert(currency(), currency(), Decimal.t() | nil) ::
+  @spec convert(currency(), currency(), Decimal.t()) ::
           {:ok, Decimal.t()} | {:error, error_message()} | no_return()
   def convert(from, to, amount), do: impl!().convert(from, to, amount)
 

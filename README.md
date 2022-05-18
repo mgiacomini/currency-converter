@@ -15,6 +15,7 @@ curl --request POST \
 ```
 
 The API will respond with status 200 when everything works and with 422 when any attribute is invalid.
+The *amount* input must be a float, otherwise you will get a status 422 with error message.
 
 ## Testing
 
