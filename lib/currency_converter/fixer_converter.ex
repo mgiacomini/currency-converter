@@ -28,7 +28,7 @@ defmodule CurrencyConverter.FixerConverter do
         {:error, body["message"]}
 
       {:ok, %Tesla.Env{status: 200, body: %{"error" => error}}} ->
-        {:error, error}
+        {:error, error["info"]}
     end
   end
 

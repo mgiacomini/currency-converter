@@ -46,7 +46,7 @@ defmodule CurrencyConverter.FixerConverterTest do
         json(%{"error" => expected_error}, status: 200)
       end)
 
-      assert {:error, expected_error} == FixerConverter.convert("xxx", @to, @amount)
+      assert {:error, expected_error["info"]} == FixerConverter.convert("xxx", @to, @amount)
     end
 
     test "returns error when *to* currency is invalid" do
@@ -60,7 +60,7 @@ defmodule CurrencyConverter.FixerConverterTest do
         json(%{"error" => expected_error}, status: 200)
       end)
 
-      assert {:error, expected_error} == FixerConverter.convert(@from, "xxx", @amount)
+      assert {:error, expected_error["info"]} == FixerConverter.convert(@from, "xxx", @amount)
     end
 
     test "returns the converted amount" do
